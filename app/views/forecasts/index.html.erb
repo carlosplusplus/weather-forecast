@@ -1,7 +1,23 @@
 <div class="space-y-6">
   <!-- Address Input Form -->
+  <%= form_with url: search_forecasts_path, method: :get, local: false,
+    data: { turbo_frame: "forecast_results", turbo_stream: true },
+    class: "bg-white p-6 rounded-2xl shadow-md" do |form| %>
+    <h2 class="text-xl font-semibold text-center mb-4">Enter an address to get the weather</h2>
 
+    <div class="flex flex-col sm:flex-row gap-3">
+      <%= form.text_field :address,
+        placeholder: "e.g., 123 Main St, New York",
+        required: true,
+        class: "flex-1 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      %>
+
+      <%= form.button "Get Forecast",
+        class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+      %>
+    </div>
+  <% end %>
 
   <!-- Weather Report Section -->
-
+  <%= turbo_frame_tag "forecast_results" %>
 </div>
