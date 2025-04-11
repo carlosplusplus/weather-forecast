@@ -1,0 +1,51 @@
+<div class="max-w-2xl mx-auto p-6 space-y-6">
+
+  <h1 class="text-3xl font-bold text-gray-800">🌦️ Weather Forecast</h1>
+
+  <%= form_with url: root_path, method: :get, local: false, data: { turbo_frame: "forecast_results" }, class: "space-y-4" do %>
+    <div>
+      <%= label_tag :address, "Enter an address", class: "block font-medium text-gray-700" %>
+      <%= text_field_tag :address, params[:address], class: "w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+    <div>
+      <%= submit_tag "Get Forecast", class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "forecast_results" do %>
+    <% if @forecast.present? %>
+      <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-6 space-y-4">
+
+        <p class="text-lg font-semibold text-gray-700">Forecast for <%= @address %>:</p>
+
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-blue-50 p-4 rounded-md">
+          <div>
+            <p class="text-2xl font-bold">🌡️ <%= @forecast[:current][:temperature] %>°F</p>
+            <p class="text-gray-600">☁️ <%= @forecast[:current][:description] %></p>
+          </div>
+          <div class="text-sm mt-4 sm:mt-0">
+            <p>🔺 High: <%= @forecast[:today][:high] %>°F</p>
+            <p>🔻 Low: <%= @forecast[:today][:low] %>°F</p>
+            <p class="text-gray-500 italic mt-1">
+              <%= @forecast[:from_cache] ? "✅ Served from cache" : "🆕 Fetched fresh" %>
+            </p>
+          </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-700 mt-6">📅 Extended Forecast</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+          <% @forecast[:extended].first(10).each do |period| %>
+            <div class="border rounded-md p-3 bg-gray-50">
+              <p class="font-semibold"><%= period[:name] %></p>
+              <p><%= period[:temperature] %>°<%= period[:temperature_unit] %> – <%= period[:short_forecast] %></p>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    <% elsif flash[:alert] %>
+      <p class="text-red-600 font-semibold mt-4"><%= flash[:alert] %></p>
+    <% end %>
+  <% end %>
+</div>
