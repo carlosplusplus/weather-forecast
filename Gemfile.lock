@@ -119,6 +119,10 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    importmap-rails (2.1.0)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -313,6 +317,8 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     stringio (3.1.6)
     tailwindcss-rails (4.2.2)
       railties (>= 7.0.0)
@@ -329,6 +335,9 @@ GEM
     thruster (0.1.12-arm64-darwin)
     thruster (0.1.12-x86_64-linux)
     timeout (0.4.3)
+    turbo-rails (2.0.13)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -369,6 +378,7 @@ DEPENDENCIES
   debug
   geocoder
   httparty
+  importmap-rails
   jbuilder
   kamal
   propshaft
@@ -377,8 +387,10 @@ DEPENDENCIES
   rspec-rails (~> 7.1)
   rubocop-rails-omakase
   selenium-webdriver
+  stimulus-rails
   tailwindcss-rails
   thruster
+  turbo-rails
   tzinfo-data
   web-console
 
