@@ -1,6 +1,3 @@
-require "net/http"
-require "json"
-
 class WeatherService
   include HTTParty
 
@@ -50,16 +47,18 @@ class WeatherService
   end
 
   def get_extended_forecast(forecast_url)
-    forecast = self.class.get(forecast_url)
+    @extended_forecast ||= begin
+      forecast = self.class.get(forecast_url)
 
-    forecast["properties"]["periods"].map do |period|
-      {
-        name: period["name"],
-        temperature: period["temperature"],
-        temperature_unit: period["temperatureUnit"],
-        short_forecast: period["shortForecast"],
-        detailed_forecast: period["detailedForecast"]
-      }
+      forecast["properties"]["periods"].map do |period|
+        {
+          name: period["name"],
+          temperature: period["temperature"],
+          temperature_unit: period["temperatureUnit"],
+          short_forecast: period["shortForecast"],
+          detailed_forecast: period["detailedForecast"]
+        }
+      end
     end
   end
 

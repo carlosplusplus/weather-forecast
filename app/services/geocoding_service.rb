@@ -1,5 +1,4 @@
 class GeocodingService
-
   # This method takes an address as input and returns a hash with latitude and longitude.
   # If the geocoding fails, it raises a GeocodingError with the address.
   def self.coords_from_address(address)
