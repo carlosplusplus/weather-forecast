@@ -15,16 +15,24 @@ class WeatherService
   end
 
   def fetch_forecast
-    Rails.cache.fetch("forecast-#{zip}", expires_in: 30.minutes) do
-      point_data = get_points_metadata
+    # Check if the forecast data is already cached
+    # If cached, return the cached data with a flag indicating it's from the cache.
+    cached = Rails.cache.read("forecast-#{zip}")
+    return cached.merge(from_cache: true) if cached
 
-      {
+    # If not cached, fetch the data from the API and store it in the cache
+    # with an expiration time of 30 minutes.
+    point_data = get_points_metadata
+
+    new_data =  {
         current: get_current_observation(point_data[:observation_station]),
         today: extract_today_forecast(point_data[:forecast_url]),
         extended: get_extended_forecast(point_data[:forecast_url]),
         from_cache: false
-      }
-    end.merge(from_cache: true)
+    }
+
+    Rails.cache.write("forecast-#{zip}", new_data, expires_in: 30.minutes)
+    new_data
   end
 
   private
