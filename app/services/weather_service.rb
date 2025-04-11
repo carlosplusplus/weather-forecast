@@ -6,21 +6,25 @@ class WeatherService
   headers "User-Agent" => "WeatherForecast Rails 8 Application"
   format :json
 
-  attr_reader :lat, :lon
+  attr_reader :lat, :lon, :zip
 
-  def initialize(lat:, lon:)
+  def initialize(lat:, lon:, zip:)
     @lat = lat
     @lon = lon
+    @zip = zip
   end
 
   def fetch_forecast
-    point_data = get_points_metadata
+    Rails.cache.fetch("forecast-#{zip}", expires_in: 30.minutes) do
+      point_data = get_points_metadata
 
-    {
-      current: get_current_observation(point_data[:observation_station]),
-      today: extract_today_forecast(point_data[:forecast_url]),
-      extended: get_extended_forecast(point_data[:forecast_url])
-    }
+      {
+        current: get_current_observation(point_data[:observation_station]),
+        today: extract_today_forecast(point_data[:forecast_url]),
+        extended: get_extended_forecast(point_data[:forecast_url]),
+        from_cache: false
+      }
+    end.merge(from_cache: true)
   end
 
   private
@@ -30,7 +34,8 @@ class WeatherService
 
     {
       forecast_url: res.dig("properties", "forecast"),
-      observation_station: res.dig("properties", "observationStations")
+      observation_station: res.dig("properties", "observationStations"),
+      zip_code: zip
     }
   end
 

@@ -1,13 +1,17 @@
 class GeocodingService
-  # This method takes an address as input and returns a hash with latitude and longitude.
-  # If the geocoding fails, it raises a GeocodingError with the address.
-  def self.coords_from_address(address)
+  # This method takes an address as input and returns lat, long, and zip code.
+  #   If a zip code is not found, raise a GeocodingZipCodeError.
+  #   If latitude and longitude coordinates are not found, raise a GeocodingAddressError.
+  def self.location_data_from_address(address)
     result = Geocoder.search(address).first
 
-    if result&.coordinates.present?
-      { lat: result.coordinates[0], lon: result.coordinates[1] }
-    else
-      raise GeocodingError.new(address)
-    end
+    raise GeocodingZipCodeError.new(address) unless result&.postal_code.present?
+    raise GeocodingAddressError.new(address) unless result&.coordinates.present?
+
+    {
+      lat: result.coordinates[0],
+      lon: result.coordinates[1],
+      zip: result.postal_code
+    }
   end
 end
