@@ -68,9 +68,8 @@ class WeatherService
       forecast = self.class.get(forecast_url)
 
       forecast["properties"]["periods"].map do |period|
-        # TODO: filter out Today
-        # Filter out period related to the current night.
-        next if period["name"].include?("Tonight")
+        # Filter out periods related to the current day.
+        next if period["name"].downcase.match?(/morning|afternoon|today|tonight/)
 
         {
           name: period["name"],
