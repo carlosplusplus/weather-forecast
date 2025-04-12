@@ -34,14 +34,119 @@ class ForecastsController < ApplicationController
 
     # Replace this with actual logic to fetch weather data
     @forecast = {
-      current: { temperature: 72, description: "Sunny" },
-      today: { high: 75, low: 65 },
-      extended: [
-        { name: "Monday", temperature: 70, temperature_unit: "F", short_forecast: "Partly Cloudy" },
-        { name: "Tuesday", temperature: 68, temperature_unit: "F", short_forecast: "Rainy" }
+      :city => "Prosper",
+      :state => "TX",
+      :current    => {
+        :temperature => 42.1,
+        :description => "Mostly Cloudy"
+      },
+      :today      => {
+        :high => 47,
+        :low  => 39
+      },
+      :extended   => [
+        {
+          :name              => "Tonight",
+          :temperature       => 39,
+          :temperature_unit  => "F",
+          :short_forecast    => "Light Rain Likely",
+          :detailed_forecast => "Rain likely. Cloudy, with a low around 39. East wind around 5 mph. Chance of precipitation is 60%. New rainfall amounts less than a tenth of an inch possible."
+        },
+        {
+          :name              => "Friday",
+          :temperature       => 47,
+          :temperature_unit  => "F",
+          :short_forecast    => "Light Rain Likely",
+          :detailed_forecast => "Rain likely. Cloudy, with a high near 47. East wind 5 to 10 mph. Chance of precipitation is 70%. New rainfall amounts between a quarter and half of an inch possible."
+        },
+        {
+          :name              => "Friday Night",
+          :temperature       => 37,
+          :temperature_unit  => "F",
+          :short_forecast    => "Rain",
+          :detailed_forecast => "Rain. Cloudy, with a low around 37. Northeast wind around 10 mph, with gusts as high as 25 mph. Chance of precipitation is 90%. New rainfall amounts between three quarters and one inch possible."
+        },
+        {
+          :name              => "Saturday",
+          :temperature       => 43,
+          :temperature_unit  => "F",
+          :short_forecast    => "Rain",
+          :detailed_forecast => "Rain. Cloudy, with a high near 43. Northeast wind 10 to 15 mph. Chance of precipitation is 90%. New rainfall amounts between a half and three quarters of an inch possible."
+        },
+        {
+          :name              => "Saturday Night",
+          :temperature       => 38,
+          :temperature_unit  => "F",
+          :short_forecast    => "Light Rain Likely",
+          :detailed_forecast => "Rain likely. Mostly cloudy, with a low around 38. North wind around 10 mph. Chance of precipitation is 60%. New rainfall amounts less than a tenth of an inch possible."
+        },
+        {
+          :name              => "Sunday",
+          :temperature       => 57,
+          :temperature_unit  => "F",
+          :short_forecast    => "Chance Light Rain",
+          :detailed_forecast => "A chance of rain. Partly sunny, with a high near 57. Chance of precipitation is 30%. New rainfall amounts less than a tenth of an inch possible."
+        },
+        {
+          :name              => "Sunday Night",
+          :temperature       => 40,
+          :temperature_unit  => "F",
+          :short_forecast    => "Slight Chance Light Rain then Partly Cloudy",
+          :detailed_forecast => "A slight chance of rain before 8pm. Partly cloudy, with a low around 40."
+        },
+        {
+          :name              => "Monday",
+          :temperature       => 66,
+          :temperature_unit  => "F",
+          :short_forecast    => "Mostly Sunny",
+          :detailed_forecast => "Mostly sunny, with a high near 66."
+        },
+        {
+          :name              => "Monday Night",
+          :temperature       => 49,
+          :temperature_unit  => "F",
+          :short_forecast    => "Chance Rain Showers",
+          :detailed_forecast => "A chance of rain showers after 8pm. Mostly cloudy, with a low around 49. Chance of precipitation is 40%."
+        },
+        {
+          :name              => "Tuesday",
+          :temperature       => 64,
+          :temperature_unit  => "F",
+          :short_forecast    => "Slight Chance Rain Showers then Partly Sunny",
+          :detailed_forecast => "A slight chance of rain showers before 8am. Partly sunny, with a high near 64."
+        },
+        {
+          :name              => "Tuesday Night",
+          :temperature       => 40,
+          :temperature_unit  => "F",
+          :short_forecast    => "Partly Cloudy",
+          :detailed_forecast => "Partly cloudy, with a low around 40."
+        },
+        {
+          :name              => "Wednesday",
+          :temperature       => 53,
+          :temperature_unit  => "F",
+          :short_forecast    => "Partly Sunny",
+          :detailed_forecast => "Partly sunny, with a high near 53."
+        },
+        {
+          :name              => "Wednesday Night",
+          :temperature       => 35,
+          :temperature_unit  => "F",
+          :short_forecast    => "Partly Cloudy",
+          :detailed_forecast => "Partly cloudy, with a low around 35."
+        },
+        {
+          :name              => "Thursday",
+          :temperature       => 58,
+          :temperature_unit  => "F",
+          :short_forecast    => "Sunny",
+          :detailed_forecast => "Sunny, with a high near 58."
+        }
       ],
-      from_cache: false
+      :from_cache => true
     }
+
     @address = address
 
     respond_to do |format|

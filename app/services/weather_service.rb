@@ -25,6 +25,8 @@ class WeatherService
     point_data = get_points_metadata
 
     new_data =  {
+        city: point_data[:city],
+        state: point_data[:state],
         current: get_current_observation(point_data[:observation_station]),
         today: extract_today_forecast(point_data[:forecast_url]),
         extended: get_extended_forecast(point_data[:forecast_url]),
@@ -41,6 +43,8 @@ class WeatherService
     res = self.class.get("/points/#{lat},#{lon}")
 
     {
+      city: res.dig("properties", "relativeLocation", "properties", "city"),
+      state: res.dig("properties", "relativeLocation", "properties", "state"),
       forecast_url: res.dig("properties", "forecast"),
       observation_station: res.dig("properties", "observationStations"),
       zip_code: zip
@@ -64,6 +68,9 @@ class WeatherService
       forecast = self.class.get(forecast_url)
 
       forecast["properties"]["periods"].map do |period|
+        # Filter out periods related to the night time (e.g. "Tonight", "Saturday Night")
+        next if period["name"].downcase.include?("night")
+
         {
           name: period["name"],
           temperature: period["temperature"],
@@ -71,7 +78,7 @@ class WeatherService
           short_forecast: period["shortForecast"],
           detailed_forecast: period["detailedForecast"]
         }
-      end
+      end.compact
     end
   end
 

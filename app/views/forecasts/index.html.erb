@@ -3,7 +3,7 @@
   <%= form_with url: search_forecasts_path, method: :get, local: false,
     data: { turbo_frame: "forecast_results", turbo_stream: true },
     class: "bg-white p-6 rounded-2xl shadow-md" do |form| %>
-    <h2 class="text-xl font-semibold text-center mb-4">Enter an address to get the weather</h2>
+    <h2 class="text-xl font-semibold text-center mb-4">Enter an US address to get the weather</h2>
 
     <div class="flex flex-col sm:flex-row gap-3">
       <%= form.text_field :address,
