@@ -33,8 +33,8 @@ class WeatherService
         city: point_data[:city],
         state: point_data[:state],
         current: get_current_observation(point_data[:observation_station]),
-        today: extract_today_forecast(point_data[:forecast_url]),
-        extended: extract_five_day_forecast(point_data[:forecast_url]),
+        today: extract_today_forecast(forecast_data),
+        extended: extract_five_day_forecast(forecast_data),
         from_cache: false
     }
 
@@ -73,11 +73,11 @@ class WeatherService
   end
 
   def extract_today_forecast(forecast_data)
-    today = forecast_data.first(2) # Today and tonight
+    today = forecast_data["properties"]["periods"].first(2) # Today and tonight
 
     {
-      high: today.find { |p| p[:name].downcase.include?("day") }&.dig(:temperature),
-      low: today.find { |p| p[:name].downcase.include?("night") }&.dig(:temperature)
+      high: today[0]["temperature"],
+      low: today[1]["temperature"]
     }
   end
 

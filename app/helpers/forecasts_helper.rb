@@ -13,12 +13,10 @@ module ForecastsHelper
                   "partly_cloudy.png"
     when /thunderstorm/ # Matches "Thunderstorm", "Severe Thunderstorm", etc.
                   "thunderstorm.png"
-    when /cloudy/
+    when /cloudy|fog/
                   "cloudy.png"
-    when /sunny/ # Matches "Sunny", "Mostly Sunny", etc.
-                  "sunny.png"
     else
-                  "sunny.png" # Fallback for unknown conditions
+                  "sunny.png" # Matches everything else! ☀️
     end
 
     image_tag("weather_icons/#{icon_file}", alt: short_forecast, class: "w-#{size} h-#{size} mx-auto")
