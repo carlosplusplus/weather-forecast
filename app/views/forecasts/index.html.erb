@@ -19,5 +19,7 @@
   <% end %>
 
   <!-- Weather Report Section -->
-  <%= turbo_frame_tag "forecast_results" %>
+  <%= turbo_frame_tag "forecast_results" do %>
+    <%= render "forecasts/weather_report", forecast: @forecast %>
+  <% end %>
 </div>

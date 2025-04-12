@@ -69,7 +69,7 @@ class WeatherService
 
       forecast["properties"]["periods"].map do |period|
         # Filter out period related to the current night.
-        next if period["name"].downcase.include?("Tonight")
+        next if period["name"].include?("Tonight")
 
         {
           name: period["name"],
