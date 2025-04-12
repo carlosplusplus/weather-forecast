@@ -68,6 +68,7 @@ class WeatherService
       forecast = self.class.get(forecast_url)
 
       forecast["properties"]["periods"].map do |period|
+        # TODO: filter out Today
         # Filter out period related to the current night.
         next if period["name"].include?("Tonight")
 
@@ -84,6 +85,8 @@ class WeatherService
 
   def extract_today_forecast(forecast_url)
     today = get_extended_forecast(forecast_url).first(2) # Today and tonight
+
+    # TODO: fix high/low temperature output
 
     {
       high: today.find { |p| p[:name].downcase.include?("day") }&.dig(:temperature),

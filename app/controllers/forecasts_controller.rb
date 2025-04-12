@@ -6,10 +6,7 @@ class ForecastsController < ApplicationController
     return unless params[:address].present?
 
     begin
-      Rails.logger.debug "Fetching location data for address: #{params[:address]}"
       location = GeocodingService.location_data_from_address(params[:address])
-
-      Rails.logger.debug "Location data fetched: #{location.inspect}"
 
       @forecast = WeatherService.new(
         lat: location[:lat],
@@ -17,13 +14,9 @@ class ForecastsController < ApplicationController
         zip: location[:zip]
       ).fetch_forecast
 
-      Rails.logger.debug "Forecast data fetched: #{@forecast.inspect}"
-
       respond_to do |format|
         format.turbo_stream do
-          Rails.logger.debug "Rendering Turbo Stream response."
-
-          render turbo_stream: turbo_stream.replace(
+          render turbo_stream: turbo_stream.update(
             "forecast_results",
             partial: "forecasts/weather_report",
             locals: { forecast: @forecast }
@@ -31,9 +24,13 @@ class ForecastsController < ApplicationController
         end
       end
     rescue GeocodingAddressError, GeocodingZipCodeError => e
+      Rails.logger.error "Geocoding error: #{e.message}"
       flash[:alert] = e.message
+      head :unprocessable_entity
     rescue => e
+      Rails.logger.error "Unexpected error: #{e.message}"
       flash[:alert] = "An error occurred while fetching the forecast: #{e.message}."
+      head :internal_server_error
     end
   end
 end
