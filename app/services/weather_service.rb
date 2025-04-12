@@ -23,13 +23,18 @@ class WeatherService
     # If not cached, fetch the data from the API and store it in the cache.
     # with an expiration time of 30 minutes.
     point_data = get_points_metadata
+    forecast_data = get_extended_forecast(point_data[:forecast_url])
 
+    # Using the gathered metadata, fetch:
+    # 1. Current weather
+    # 2. Today's forecast
+    # 3. Extended (5-day) forecast
     new_data =  {
         city: point_data[:city],
         state: point_data[:state],
         current: get_current_observation(point_data[:observation_station]),
         today: extract_today_forecast(point_data[:forecast_url]),
-        extended: get_extended_forecast(point_data[:forecast_url]),
+        extended: extract_five_day_forecast(point_data[:forecast_url]),
         from_cache: false
     }
 
@@ -64,33 +69,31 @@ class WeatherService
   end
 
   def get_extended_forecast(forecast_url)
-    @extended_forecast ||= begin
-      forecast = self.class.get(forecast_url)
-
-      forecast["properties"]["periods"].map do |period|
-        # Filter out periods related to the current day.
-        next if period["name"].downcase.match?(/morning|afternoon|today|tonight/)
-
-        {
-          name: period["name"],
-          temperature: period["temperature"],
-          temperature_unit: period["temperatureUnit"],
-          short_forecast: period["shortForecast"],
-          detailed_forecast: period["detailedForecast"]
-        }
-      end.compact.take(10) # Limit to 10 period (5 days, day/night pairs)
-    end
+    self.class.get(forecast_url)
   end
 
-  def extract_today_forecast(forecast_url)
-    today = get_extended_forecast(forecast_url).first(2) # Today and tonight
-
-    # TODO: fix high/low temperature output
+  def extract_today_forecast(forecast_data)
+    today = forecast_data.first(2) # Today and tonight
 
     {
       high: today.find { |p| p[:name].downcase.include?("day") }&.dig(:temperature),
       low: today.find { |p| p[:name].downcase.include?("night") }&.dig(:temperature)
     }
+  end
+
+  def extract_five_day_forecast(forecast_data)
+    forecast_data["properties"]["periods"].map do |period|
+      # Filter out periods related to the current day.
+      next if period["name"].downcase.match?(/morning|afternoon|today|tonight/)
+
+      {
+        name: period["name"],
+        temperature: period["temperature"],
+        temperature_unit: period["temperatureUnit"],
+        short_forecast: period["shortForecast"],
+        detailed_forecast: period["detailedForecast"]
+      }
+    end.compact.take(10)
   end
 
   def to_fahrenheit(celsius)
