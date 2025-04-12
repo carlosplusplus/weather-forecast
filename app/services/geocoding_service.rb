@@ -3,10 +3,10 @@ class GeocodingService
   #   If a zip code is not found, raise a GeocodingZipCodeError.
   #   If latitude and longitude coordinates are not found, raise a GeocodingAddressError.
   def self.location_data_from_address(address)
-    result = Geocoder.search(address).first
+    result = Geocoder.search(address, params: { countrycodes: "us" }).first
 
-    raise GeocodingZipCodeError.new(address) unless result&.postal_code.present?
     raise GeocodingAddressError.new(address) unless result&.coordinates.present?
+    raise GeocodingZipCodeError.new(address) unless result&.postal_code.present?
 
     {
       lat: result.coordinates[0],
