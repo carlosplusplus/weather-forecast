@@ -46,13 +46,6 @@ class ForecastsController < ApplicationController
       },
       :extended   => [
         {
-          :name              => "Tonight",
-          :temperature       => 39,
-          :temperature_unit  => "F",
-          :short_forecast    => "Light Rain Likely",
-          :detailed_forecast => "Rain likely. Cloudy, with a low around 39. East wind around 5 mph. Chance of precipitation is 60%. New rainfall amounts less than a tenth of an inch possible."
-        },
-        {
           :name              => "Friday",
           :temperature       => 47,
           :temperature_unit  => "F",
@@ -70,7 +63,7 @@ class ForecastsController < ApplicationController
           :name              => "Saturday",
           :temperature       => 43,
           :temperature_unit  => "F",
-          :short_forecast    => "Rain",
+          :short_forecast    => "Snow",
           :detailed_forecast => "Rain. Cloudy, with a high near 43. Northeast wind 10 to 15 mph. Chance of precipitation is 90%. New rainfall amounts between a half and three quarters of an inch possible."
         },
         {
@@ -84,7 +77,7 @@ class ForecastsController < ApplicationController
           :name              => "Sunday",
           :temperature       => 57,
           :temperature_unit  => "F",
-          :short_forecast    => "Chance Light Rain",
+          :short_forecast    => "Sunny",
           :detailed_forecast => "A chance of rain. Partly sunny, with a high near 57. Chance of precipitation is 30%. New rainfall amounts less than a tenth of an inch possible."
         },
         {
@@ -112,7 +105,7 @@ class ForecastsController < ApplicationController
           :name              => "Tuesday",
           :temperature       => 64,
           :temperature_unit  => "F",
-          :short_forecast    => "Slight Chance Rain Showers then Partly Sunny",
+          :short_forecast    => "Thunderstorms Likely",
           :detailed_forecast => "A slight chance of rain showers before 8am. Partly sunny, with a high near 64."
         },
         {
@@ -121,27 +114,6 @@ class ForecastsController < ApplicationController
           :temperature_unit  => "F",
           :short_forecast    => "Partly Cloudy",
           :detailed_forecast => "Partly cloudy, with a low around 40."
-        },
-        {
-          :name              => "Wednesday",
-          :temperature       => 53,
-          :temperature_unit  => "F",
-          :short_forecast    => "Partly Sunny",
-          :detailed_forecast => "Partly sunny, with a high near 53."
-        },
-        {
-          :name              => "Wednesday Night",
-          :temperature       => 35,
-          :temperature_unit  => "F",
-          :short_forecast    => "Partly Cloudy",
-          :detailed_forecast => "Partly cloudy, with a low around 35."
-        },
-        {
-          :name              => "Thursday",
-          :temperature       => 58,
-          :temperature_unit  => "F",
-          :short_forecast    => "Sunny",
-          :detailed_forecast => "Sunny, with a high near 58."
         }
       ],
       :from_cache => true

@@ -15,12 +15,12 @@ class WeatherService
   end
 
   def fetch_forecast
-    # Check if the forecast data is already cached
+    # Check if the forecast data is already cached.
     # If cached, return the cached data with a flag indicating it's from the cache.
     cached = Rails.cache.read("forecast-#{zip}")
     return cached.merge(from_cache: true) if cached
 
-    # If not cached, fetch the data from the API and store it in the cache
+    # If not cached, fetch the data from the API and store it in the cache.
     # with an expiration time of 30 minutes.
     point_data = get_points_metadata
 
@@ -68,8 +68,8 @@ class WeatherService
       forecast = self.class.get(forecast_url)
 
       forecast["properties"]["periods"].map do |period|
-        # Filter out periods related to the night time (e.g. "Tonight", "Saturday Night")
-        next if period["name"].downcase.include?("night")
+        # Filter out period related to the current night.
+        next if period["name"].downcase.include?("Tonight")
 
         {
           name: period["name"],
@@ -78,7 +78,7 @@ class WeatherService
           short_forecast: period["shortForecast"],
           detailed_forecast: period["detailedForecast"]
         }
-      end.compact
+      end.compact.take(10) # Limit to 10 period (5 days, day/night pairs)
     end
   end
 

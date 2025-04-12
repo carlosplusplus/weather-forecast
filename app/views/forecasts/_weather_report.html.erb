@@ -29,6 +29,57 @@
         <p class="text-lg text-gray-600 font-bold"><%= @forecast[:current][:description] %></p>
       </div>
     </div>
+
+    <!-- 5 Day Forecast -->
+    <%# <div class="grid grid-cols-5 gap-2 text-center text-sm text-gray-700">
+      <div class="bg-blue-100 rounded-xl p-2">
+        <p class="font-semibold">Wed</p>
+        <img src="https://www.weatherbit.io/static/img/icons/c02d.png" class="w-8 h-8 mx-auto" />
+        <p>24°C</p>
+        <p class="text-xs text-gray-500">18°C</p>
+      </div>
+      <div class="bg-blue-100 rounded-xl p-2">
+        <p class="font-semibold">Thu</p>
+        <img src="https://www.weatherbit.io/static/img/icons/r01d.png" class="w-8 h-8 mx-auto" />
+        <p>21°C</p>
+        <p class="text-xs text-gray-500">17°C</p>
+      </div>
+      <div class="bg-blue-100 rounded-xl p-2">
+        <p class="font-semibold">Fri</p>
+        <img src="https://www.weatherbit.io/static/img/icons/s01d.png" class="w-8 h-8 mx-auto" />
+        <p>20°C</p>
+        <p class="text-xs text-gray-500">15°C</p>
+      </div>
+      <div class="bg-blue-100 rounded-xl p-2">
+        <p class="font-semibold">Sat</p>
+        <img src="https://www.weatherbit.io/static/img/icons/c03d.png" class="w-8 h-8 mx-auto" />
+        <p>22°C</p>
+        <p class="text-xs text-gray-500">16°C</p>
+      </div>
+      <div class="bg-blue-100 rounded-xl p-2">
+        <p class="font-semibold">Sun</p>
+        <img src="https://www.weatherbit.io/static/img/icons/c01d.png" class="w-8 h-8 mx-auto" />
+        <p>25°C</p>
+        <p class="text-xs text-gray-500">19°C</p>
+      </div>
+    </div> %>
+    <div class="grid grid-cols-5 gap-2 text-center text-sm text-gray-700">
+      <% @forecast[:extended].each_slice(2) do |day, night| %>
+        <div class="bg-blue-100 rounded-xl p-2">
+          <!-- Abbreviated Day Name -->
+          <p class="font-semibold"><%= abbreviate_day(day[:name]) %></p>
+
+          <!-- Weather Icon -->
+          <%= weather_icon(day[:short_forecast]) %>
+
+          <!-- High Temperature -->
+          <p class="font-semibold text-red-600"><%= day[:temperature] %>°F</p>
+
+          <!-- Low Temperature -->
+          <p class="font-semibold text-blue-600"><%= night[:temperature] %>°F</p>
+        </div>
+      <% end %>
+    </div>
 <% elsif flash[:alert] %>
   <p class="text-red-600 font-semibold mt-4"><%= flash[:alert] %></p>
 <% end %>
