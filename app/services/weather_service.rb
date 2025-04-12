@@ -73,12 +73,22 @@ class WeatherService
   end
 
   def extract_today_forecast(forecast_data)
-    today = forecast_data["properties"]["periods"].first(2) # Today and tonight
+    today = forecast_data["properties"]["periods"].first(2)
 
-    {
-      high: today[0]["temperature"],
-      low: today[1]["temperature"]
-    }
+    # Check if the first period is "Tonight", meaning that there is only one period for today.
+    # In this case, set the high temperature to "-" and the low temperature to the first period's temperature.
+    # Otherwise, set the high temperature to the first period's temperature and the low temperature to the second period's temperature.
+    if (today[0]["name"].downcase.match?(/tonight/))
+      {
+        high: "-",
+        low: today[0]["temperature"]
+      }
+    else
+      {
+        high: today[0]["temperature"],
+        low: today[1]["temperature"]
+      }
+    end
   end
 
   def extract_five_day_forecast(forecast_data)
