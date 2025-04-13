@@ -48,6 +48,19 @@
         </div>
       <% end %>
     </div>
+
+    <!-- Cache Indicator -->
+    <div class="mt-4 text-center">
+      <% if @forecast[:from_cache] %>
+        <p class="bg-gray-200 text-gray-700 text-xs font-semibold px-4 py-1 rounded-full">
+          Data is from cache
+        </p>
+      <% else %>
+        <p class="bg-green-200 text-green-700 text-xs font-semibold px-4 py-1 rounded-full">
+          Data is freshly fetched
+        </p>
+      <% end %>
+    </div>
 <% elsif flash[:alert] %>
   <p class="text-red-600 font-semibold mt-4"><%= flash[:alert] %></p>
 <% end %>
