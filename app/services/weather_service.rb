@@ -61,9 +61,10 @@ class WeatherService
     first_station_id = station_list["features"][0]["id"].split("/").last
 
     obs_data = self.class.get("/stations/#{first_station_id}/observations/latest")
+    temperature = to_fahrenheit(obs_data.dig("properties", "temperature", "value"))
 
     {
-      temperature: to_fahrenheit(obs_data.dig("properties", "temperature", "value")),
+      temperature: temperature ? "#{temperature}°F" : "-",
       description: obs_data.dig("properties", "textDescription")
     }
   end
