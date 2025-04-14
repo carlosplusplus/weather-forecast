@@ -23,6 +23,8 @@ module ForecastsHelper
   end
 
   def abbreviate_day(day)
+    return nil if day.nil? || day.empty?
+
     day[0..2].upcase
   end
 end
