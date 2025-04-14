@@ -18,6 +18,13 @@
     </div>
   <% end %>
 
+  <!-- Flash Messages Section -->
+  <turbo-frame id="flash">
+    <% if flash[:alert] %>
+      <p class="text-red-600 font-semibold mt-4"><%= flash[:alert] %></p>
+    <% end %>
+  </turbo-frame>
+
   <!-- Weather Report Section -->
   <%= turbo_frame_tag "forecast_results" %>
 </div>
