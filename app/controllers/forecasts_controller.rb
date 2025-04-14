@@ -46,7 +46,7 @@ class ForecastsController < ApplicationController
         render turbo_stream: turbo_stream.update(
           turbo_frame_id,
           partial: "shared/flash"
-        )
+        ), status: status
       end
     end
   end

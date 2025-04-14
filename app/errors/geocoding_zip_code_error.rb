@@ -1,5 +1,10 @@
 class GeocodingZipCodeError < StandardError
   def initialize(address)
-    super("A valid US zip code must be provided for address: #{address}")
+    @address = address
+    super()
+  end
+
+  def message
+    "A valid US zip code was not found for address: #{@address}"
   end
 end
