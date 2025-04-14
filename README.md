@@ -4,7 +4,21 @@ This is a Ruby on Rails application that retrieves and displays weather forecast
 
 ## 🎥 Demo Videos
 
-==> TBD
+1. **Retrieving a Weather Forecast**
+
+==> LINK
+
+2. **Retrieving a weather forecast from the cache**
+
+==> LINK
+
+3. **Handling an invalid address**
+
+==> LINK
+
+4. **Responsive UI**
+
+==> LINK
 
 ## 📋 Initial Requirements
 
@@ -49,6 +63,8 @@ This project was developed based on the following requirements:
 | Geocoding API   | Convert address → coordinates via `geocoder` gem          |
 | Weather API     | Get forecast data from National Weather Service (NWS)
 | Rails cache     | Store weather data by ZIP (30 min)      |
+
+No API keys are required for this project.
 
 ## ⚙️ Setup and Installation
 
@@ -97,7 +113,7 @@ This project was developed based on the following requirements:
    ```
 
 6. **Access the application**:
-   - Open your browser and navigate to http://localhost:5000
+   - Open your browser and navigate to <http://localhost:5000>
 
 ## 📖 Usage
 
