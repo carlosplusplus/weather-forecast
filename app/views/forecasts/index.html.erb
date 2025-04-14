@@ -1,7 +1,11 @@
-<div class="space-y-6">
+<div class="space-y-6" data-controller="weather">
   <!-- Address Input Form -->
   <%= form_with url: search_forecasts_path, method: :get, local: false,
-    data: { turbo_frame: "forecast_results", turbo_stream: true },
+    data: {
+      turbo_stream: true, turbo_frame: "forecast_results",
+      action: "submit->weather#showLoading",
+      weather_target: "form"
+    },
     class: "bg-white p-6 rounded-2xl shadow-md" do |form| %>
     <p class="text-lg font-semibold text-center mb-4">Enter a US address to get the weather from the closest station</p>
 
@@ -19,5 +23,12 @@
   <% end %>
 
   <!-- Weather Report Section -->
-  <%= turbo_frame_tag "forecast_results" %>
+  <turbo-frame id="forecast_results" data-action="turbo:frame-load->weather#hideLoading">
+    <div data-weather-target="content" class="hidden">
+      <%= render "forecasts/weather_report", forecast: @forecast %>
+    </div>
+    <div data-weather-target="spinner" class="hidden flex justify-center items-center py-6">
+      <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+    </div>
+  </turbo-frame>
 </div>

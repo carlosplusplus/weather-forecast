@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+.expanded {
+  max-height: 1000px; /* Adjust as needed */
+  transition: max-height 1.5s ease-in-out;
+}
+
+.hidden {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1.5s ease-in-out;
+}
