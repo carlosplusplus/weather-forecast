@@ -4,21 +4,21 @@ This is a Ruby on Rails application that retrieves and displays weather forecast
 
 ## 🎥 Demo Videos
 
-1. **Retrieving a Weather Forecast**
+1. **Retrieving a Weather Forecast**:
 
-==> LINK
+https://github.com/user-attachments/assets/e39b58cf-0247-477b-89e9-7a143cd7b5c6
 
-2. **Retrieving a weather forecast from the cache**
+2. **Retrieving a weather forecast from the cache**:
 
-==> LINK
+https://github.com/user-attachments/assets/a4c15dae-faf8-4285-9b32-766901f4930e
 
-3. **Handling an invalid address**
+3. **Handling an invalid address**:
 
-==> LINK
+https://github.com/user-attachments/assets/3ba4333a-c223-4ab2-8be8-a89831e6a0be
 
-4. **Responsive UI**
+4. **Responsive UI**:
 
-==> LINK
+https://github.com/user-attachments/assets/ea414bb1-32c8-4764-8350-46a4f6bc71c7
 
 ## 📋 Initial Requirements
 
