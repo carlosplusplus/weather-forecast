@@ -2,26 +2,26 @@ require "rails_helper"
 
 RSpec.describe GeocodingService do
   describe ".location_data_from_address" do
-    let(:address) { "20 W 34th St, New York, NY 10001" }
+    let(:address) { "411 Elm St, Dallas, TX 75202" }
 
     context "when the address is valid and returns coordinates and postal code" do
       before do
         # Mock the Geocoder.search response
         mock_result = double(
           Geocoder::Result::Base,
-          coordinates: [40.7128, -74.0060],
-          postal_code: "10001"
+          coordinates: [ 32.7797, -96.8084 ],
+          postal_code: "75202"
         )
-        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([mock_result])
+        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([ mock_result ])
       end
 
       it "returns the latitude, longitude, and zip code" do
         result = described_class.location_data_from_address(address)
 
         expect(result).to eq({
-          lat: 40.7128,
-          lon: -74.0060,
-          zip: "10001"
+          lat: 32.7797,
+          lon: -96.8084,
+          zip: "75202"
         })
       end
     end
@@ -32,9 +32,9 @@ RSpec.describe GeocodingService do
         mock_result = double(
           Geocoder::Result::Base,
           coordinates: nil,
-          postal_code: "10001"
+          postal_code: "75202"
         )
-        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([mock_result])
+        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([ mock_result ])
       end
 
       it "raises a GeocodingAddressError" do
@@ -49,10 +49,10 @@ RSpec.describe GeocodingService do
         # Mock the Geocoder.search response with no postal code
         mock_result = double(
           Geocoder::Result::Base,
-          coordinates: [40.7128, -74.0060],
+          coordinates: [ 32.7797, -96.8084 ],
           postal_code: nil
         )
-        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([mock_result])
+        allow(Geocoder).to receive(:search).with(address, params: { countrycodes: "us" }).and_return([ mock_result ])
       end
 
       it "raises a GeocodingZipCodeError" do

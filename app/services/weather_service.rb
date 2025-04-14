@@ -79,7 +79,7 @@ class WeatherService
     # Check if the first period is "Tonight", meaning that there is only one period for today.
     # In this case, set the high temperature to "-" and the low temperature to the first period's temperature.
     # Otherwise, set the high temperature to the first period's temperature and the low temperature to the second period's temperature.
-    if (today[0]["name"].downcase.match?(/tonight/))
+    if today[0]["name"].downcase.match?(/tonight/)
       {
         high: "-",
         low: today[0]["temperature"]
