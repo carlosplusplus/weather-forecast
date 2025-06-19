@@ -61,5 +61,5 @@ group :test do
   gem "selenium-webdriver"
 
   gem "rails-controller-testing"
-  gem "rspec-rails", "~> 7.1"
+  gem "rspec-rails", "~> 8.0"
 end
