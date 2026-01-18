@@ -5,7 +5,14 @@
 # The units are set to miles (mi), which means that distances will be calculated in miles.
 
 Geocoder.configure(
-  timeout: 5,
+  timeout: 10,
   lookup: :nominatim,
-  units: :mi
+  units: :mi,
+  use_https: true,
+  http_headers: {
+    "User-Agent" => ENV.fetch(
+      "GEOCODER_USER_AGENT",
+      "WeatherForecast Rails App (local development)"
+    )
+  }
 )
